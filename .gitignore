@@ -1,3 +1,7 @@
+wtt_front
+wtt_db
+wtt_server
+
 # Logs
 logs
 *.log
