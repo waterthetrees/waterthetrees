@@ -4,7 +4,7 @@ services:
     image: postgres
     container_name: treedbdocker
     ports:
-      - "5437:5432"
+      - "127.0.0.1:5432:5432"
     build:
       context: ./wtt_db
     environment:
@@ -23,12 +23,12 @@ services:
     container_name: wtt_server
     image: node
     ports:
-      - "3001:3001"
+      - "127.0.0.1:3001:3001"
     build: ./wtt_server/
   wtt_front:
     container_name: wtt_front
     image: node
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     build:
       context: ./wtt_front
