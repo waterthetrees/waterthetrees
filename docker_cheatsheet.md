@@ -1,5 +1,15 @@
 # Docker Cheatsheet Commands
 
+REBUILD when messed up
+```shell
+$ docker-compose rm -v
+$ docker stop $(docker ps -a -q)
+$ docker rm $(docker ps -a -q)
+$ docker images
+$ docker rmi -f 4b5361dd1869 <--- docker image
+$ docker-compose up --build
+```
+
 listing
 ```shell
 $ docker ps
