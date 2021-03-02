@@ -1,6 +1,7 @@
 wtt_front
 wtt_db
 wtt_server
+.DS_Store
 
 # Logs
 logs
