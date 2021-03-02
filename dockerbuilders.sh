@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# [[ -d wtt_db ]] || git clone https://github.com/waterthetrees/wtt_db.git
+[[ -d wtt_db ]] || git clone https://github.com/waterthetrees/wtt_db.git
 # [[ -d wtt_server ]] || git clone https://github.com/waterthetrees/wtt_server.git
 # [[ -d wtt_front ]] || git clone https://github.com/waterthetrees/wtt_front.git
 

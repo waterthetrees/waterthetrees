@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# clone front end repo
 [[ -d wtt_front ]] || git clone https://github.com/waterthetrees/wtt_front.git
 
+# find directory
 wtt_front_dir="${PWD}/wtt_front"
 
+# install node libraries
 cd "${wtt_front_dir}"
 echo "changed into this directory: ${wtt_front_dir}"
 npm install
