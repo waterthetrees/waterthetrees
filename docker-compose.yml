@@ -20,12 +20,12 @@ services:
     restart: unless-stopped
     volumes:
       - ./wtt_db/treedb.sql:/docker-entrypoint-initdb.d/treedb.sql
-  wtt_server:
-    container_name: wtt_server
-    image: node
-    ports:
-      - "127.0.0.1:3002:3002"
-    build: ./wtt_server/
+  # wtt_server:
+  #   container_name: wtt_server
+  #   image: node
+  #   ports:
+  #     - "127.0.0.1:3002:3002"
+  #   build: ./wtt_server/
   # wtt_front:
   #   container_name: wtt_front
   #   image: node
