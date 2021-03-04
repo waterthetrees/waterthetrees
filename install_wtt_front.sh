@@ -13,8 +13,8 @@ npm install
 echo "ran npm install for: ${wtt_front_dir}"
 
 # https://webpack.js.org/guides/installation/
-npm install -g webpack:@4.44.1
+npm install -g webpack@4.44.1
 echo "ran npm install for webpack:@4.44.1"
-npm install -g webpack-cli:@3.3.12
+npm install -g webpack-cli@3.3.12
 echo "ran npm install for webpack:@4.44.1"
 webpack -w
