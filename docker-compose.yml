@@ -23,6 +23,9 @@ services:
       - 'postgres-wtt'
     ports:
       - "3002:3002"
+    environment:
+      - DATABASE_HOST=${HOST_IP}
+      - DATABASE_PORT=${PSQL_PORT}
     volumes: # allows for live changes to reflect in container
       - ./wtt_server:/usr/src/app # all local files are mirrored Docker
       - /usr/src/app/node_modules # ignores local node_modules folder
