@@ -7,35 +7,29 @@ Water the Trees is an open source project run by tree planting volunteers at Sie
 
 ### INSTALL GIT
 -------------
-1. install git https://git-scm.com/downloads
+1. Install git https://git-scm.com/downloads
 
 ### INSTALL DOCKER
 -------------
-1. install docker https://www.docker.com/get-started
-2. install docker-compose (only on linux, on osx this installs with docker)
+1. Install Docker Desktop https://www.docker.com/get-started
+2. (Only for Linux users) Install docker-compose https://docs.docker.com/compose/install/
 
-### CLONE REPO
+### CLONE REPOS
 -------------
-1. Open terminal and run this
+1. Clone the waterthetrees parent repo
 ```shell
 $ git clone https://github.com/waterthetrees/waterthetrees.git
+```
+2. Clone frontend, server, and db child repos
+```shell
 $ cd waterthetrees
+$ ./clone_repos.sh
 ```
 
-### BUILD AND START THE DOCKER
----------------
-1. run shell script to clone all repos and do docker-compose: 
-```shell
-$ ./install_and_build.sh
-```
 
-### OPEN TABS and start the servers
+### BUILD & RUN DOCKER CONTAINERS
 ---------------
-1. Command T (on osx)
+1. Run docker-compose to build and run Docker containers
 ```shell
-$ cd wtt_front;npm start;
-```
-2. Command T (on osx)
-```shell
-$ cd wtt_server;npm start;
+$ docker-compose up
 ```
