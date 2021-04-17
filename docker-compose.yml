@@ -17,6 +17,19 @@ services:
     restart: unless-stopped
     volumes:
       - ./wtt_db/treedb.sql:/docker-entrypoint-initdb.d/treedb.sql
+  martin:
+    image: urbica/martin
+    restart: unless-stopped
+    ports:
+      - 3001:3001
+    build:
+      context: ./wtt_vectortiles
+    environment:
+      - WATCH_MODE=true
+      # - DATABASE_URL=postgres://trees:trees3r4t@localhost:5432/treedb
+      # - config=config.yaml
+    depends_on:
+      - 'postgres-wtt'
   wtt_server:
     container_name: wtt_server
     depends_on:
