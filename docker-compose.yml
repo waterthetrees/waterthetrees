@@ -26,8 +26,6 @@ services:
       context: ./wtt_vectortiles
     environment:
       - WATCH_MODE=true
-      # - DATABASE_URL=postgres://trees:trees3r4t@localhost:5432/treedb
-      # - config=config.yaml
     depends_on:
       - 'postgres-wtt'
   wtt_server:
