@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Clones martin
+[[ -d wtt_vectortiles ]] || git clone https://github.com/waterthetrees/wtt_vectortiles.git
+
 # Clones server
 [[ -d wtt_server ]] || git clone https://github.com/waterthetrees/wtt_server.git
 
