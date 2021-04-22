@@ -26,10 +26,24 @@ $ cd waterthetrees
 $ ./clone_repos.sh
 ```
 
-
 ### BUILD & RUN DOCKER CONTAINERS
 ---------------
 1. Run docker-compose to build and run Docker containers
 ```shell
 $ docker-compose up
+```
+> Docker mirrors local files*, so any changes you make will be reflected in the corresponding Docker container.
+>
+> **Excluding node_modules*
+
+### INSTALLING NEW NPM PACKAGES
+---------------
+> :cyclone: Since Docker does not mirror your local node_modules folder, we'll need to have Docker re-run npm install when adding a new package to the project.
+1. Rebuild images from scratch. *This step runs npm install.*
+```shell
+$ docker-compose build --no-cache
+```
+2. Spin up brand-new containers
+```shell
+$ docker-compose up --force-recreate
 ```
