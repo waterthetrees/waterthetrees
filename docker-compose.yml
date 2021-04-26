@@ -1,8 +1,8 @@
 version: "3"
 services:
-  postgres-wtt:
-    image: postgres
-    container_name: docker-postgres-treedb
+  postgis-wtt:
+    image: postgis
+    container_name: postgis-wtt
     ports:
       - "5432:5432"
     build:
@@ -17,10 +17,12 @@ services:
     restart: unless-stopped
     volumes:
       - ./wtt_db/treedb.sql:/docker-entrypoint-initdb.d/treedb.sql
+      - ./wtt_db:/usr/src/app # all local files are mirrored Docker
+      - /usr/src/app/node_modules # ignores local node_modules folder
   wtt_server:
     container_name: wtt_server
     depends_on:
-      - 'postgres-wtt'
+      - 'postgis-wtt'
     ports:
       - "3002:3002"
     environment:
@@ -31,12 +33,25 @@ services:
       - /usr/src/app/node_modules # ignores local node_modules folder
     build: ./wtt_server
   wtt_front:
-    container_name: wtt_front
-    depends_on:
-      - 'postgres-wtt'
+     container_name: wtt_front
+     depends_on:
+       - 'postgis-wtt'
+     ports:
+       - 3000:3000
+     volumes:
+      - ./wtt_front:/usr/src/app
+      - /usr/src/app/node_modules
+     build: ./wtt_front
+  martin:
+    container_name: wtt_martin
+    image: urbica/martin
+    restart: unless-stopped
     ports:
-      - "3000:3000"
-    volumes:
-     - ./wtt_front:/usr/src/app
-     - /usr/src/app/node_modules
-    build: ./wtt_front
+      - "3001:3000"
+    environment:
+      - WATCH_MODE=true
+      - DATABASE_URL=postgres://trees:trees3r4t@postgis-wtt/treedb
+      - DATABASE_HOST=${HOST_IP}
+      - DATABASE_PORT=${PSQL_PORT}
+    depends_on:
+      - postgis-wtt
