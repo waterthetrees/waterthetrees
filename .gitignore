@@ -2,6 +2,7 @@ wtt_front
 wtt_db
 wtt_server
 wtt_vectortiles
+wtt_notifications
 .DS_Store
 
 # Logs
