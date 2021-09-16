@@ -22,7 +22,7 @@ services:
   wtt_server:
     container_name: wtt_server
     depends_on:
-      - 'postgis-wtt'
+      - "postgis-wtt"
     ports:
       - "3002:3002"
     environment:
@@ -32,16 +32,31 @@ services:
       - ./wtt_server:/usr/src/app # all local files are mirrored Docker
       - /usr/src/app/node_modules # ignores local node_modules folder
     build: ./wtt_server
+  wtt_notifications:
+    container_name: wtt_notifications
+    restart: always
+    depends_on:
+      - "postgis-wtt"
+    ports:
+      - "7000:7000"
+    environment:
+      - DATABASE_HOST=${HOST_IP}
+      - DATABASE_PORT=${PSQL_PORT}
+      - WTT_SECRET=notsosecret
+    volumes: # allows for live changes to reflect in container
+      - ./wtt_notifications:/usr/src/app # all local files are mirrored Docker
+      - /usr/src/app/node_modules # ignores local node_modules folder
+    build: ./wtt_notifications
   wtt_front:
-     container_name: wtt_front
-     depends_on:
-       - 'postgis-wtt'
-     ports:
-       - 3000:3000
-     volumes:
+    container_name: wtt_front
+    depends_on:
+      - "postgis-wtt"
+    ports:
+      - 3000:3000
+    volumes:
       - ./wtt_front:/usr/src/app
       - /usr/src/app/node_modules
-     build: ./wtt_front
+    build: ./wtt_front
   martin:
     container_name: wtt_martin
     image: urbica/martin
