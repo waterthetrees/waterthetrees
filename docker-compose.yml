@@ -1,8 +1,8 @@
 version: "3"
 services:
-  postgis-wtt:
+  wtt_postgis:
     image: postgis
-    container_name: postgis-wtt
+    container_name: wtt_postgis
     ports:
       - "5432:5432"
     build:
@@ -19,29 +19,35 @@ services:
       - ./wtt_db/treedb.sql:/docker-entrypoint-initdb.d/treedb.sql
       - ./wtt_db:/usr/src/app # all local files are mirrored Docker
       - /usr/src/app/node_modules # ignores local node_modules folder
+    networks:
+      - waterthetrees
   wtt_server:
     container_name: wtt_server
     depends_on:
-      - 'postgis-wtt'
+      - 'wtt_postgis'
     ports:
       - "3002:3002"
     environment:
-      - DATABASE_HOST=${HOST_IP}
-      - DATABASE_PORT=${PSQL_PORT}
+      - DATABASE_HOST=wtt_postgis
+      - DATABASE_PORT=5432
     volumes: # allows for live changes to reflect in container
       - ./wtt_server:/usr/src/app # all local files are mirrored Docker
       - /usr/src/app/node_modules # ignores local node_modules folder
     build: ./wtt_server
-  wtt_front:
-     container_name: wtt_front
-     depends_on:
-       - 'postgis-wtt'
-     ports:
-       - 3000:3000
-     volumes:
-      - ./wtt_front:/usr/src/app
-      - /usr/src/app/node_modules
-     build: ./wtt_front
+    networks:
+      - waterthetrees
+  # wtt_front:
+  #    container_name: wtt_front
+  #    depends_on:
+  #      - 'wtt_postgis'
+  #    ports:
+  #      - 3000:3000
+  #    volumes:
+  #     - ./wtt_front:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #    build: ./wtt_front
+  #   networks:
+  #     - waterthetrees
   martin:
     container_name: wtt_martin
     image: urbica/martin
@@ -50,8 +56,18 @@ services:
       - "3001:3000"
     environment:
       - WATCH_MODE=true
-      - DATABASE_URL=postgres://trees:trees3r4t@postgis-wtt/treedb
-      - DATABASE_HOST=${HOST_IP}
-      - DATABASE_PORT=${PSQL_PORT}
+      - DATABASE_URL=postgres://trees:trees3r4t@wtt_postgis/treedb
+      - DATABASE_HOST=wtt_postgis
+      - DATABASE_PORT=5432
     depends_on:
-      - postgis-wtt
+      - wtt_postgis
+    networks:
+      - waterthetrees
+
+networks:
+  waterthetrees:
+    # external: true
+    driver: bridge
+    # aliases:
+    #   - waterthetrees
+    #   - wtt
