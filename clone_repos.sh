@@ -22,3 +22,5 @@ mv wtt* $ORG/
 # Clones db
 [[ -d wtt_db ]] || git clone https://github.com/waterthetrees/wtt_db.git
 
+# Clones notifications
+[[ -d wtt_notifications ]] || git clone https://github.com/waterthetrees/wtt_notifications.git
