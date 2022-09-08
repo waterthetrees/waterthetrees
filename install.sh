@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Substitute variables here
-CURRENT_OS="Darwin" #Linux are other valid options
-
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -11,13 +8,19 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 nvm install 18
 nvm use 18
 
-# Write docker names to /etc/hosts
+cd wtt_front; npm install; cd ..
+cd wtt_server; npm install; cp .env.example .env; cat .env; cd ..
+echo "Done installing npm packages"
+echo "Ask on slack for the .env file and place it in the wtt_server directory"
+
+
+
+echo "To get into postgres docker easier"
+echo "Enter password for sudo to echo 127.0.0.1 wtt_postgis to /etc/hosts"
 echo '127.0.0.1 wtt_postgis' | sudo tee -a /etc/hosts
+echo "Usage: psql -h wtt_postgis -U trees -d treedb"
 
 # Install git-lfs for the sql files
-cd wtt_db   
-echo $(uname)
-
 OS_TYPE=$(uname)
 echo "${OS_TYPE}"
 
@@ -31,8 +34,8 @@ if [ "${OS_TYPE}" == "Linux" ]; then
   sudo apt-get install git-lfs
 fi
 
+cd wtt_db
 git lfs install
-# # git lfs track "*.psd"
 git lfs track "treedb.sql"
 git add .gitattributes
-
+cd ..

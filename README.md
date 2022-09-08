@@ -62,10 +62,11 @@ please create an issue with the details of your problem on our
     cd waterthetrees
     ```
 
-2. Run the script to clone all other repos.
+2. Run the script to clone and install packages on all other repos.
 
     ```shell
     ./clone_repos.sh
+    ./install.sh
     ```
 
 3. The database config is passed into our backend server using
@@ -73,10 +74,6 @@ please create an issue with the details of your problem on our
 You will need to ask a team member to provide you with the environment variables
 (Try our [Slack channel](#join-us)).
 
-    ```shell
-    cd wtt_server
-    touch .env
-    ```
 
     Your file tree structure should look like this.
 
@@ -92,47 +89,81 @@ You will need to ask a team member to provide you with the environment variables
     │   │
     │   └───server
     │       │   ...
+    |
+    └───wtt_db
+    │   └───treeddb.sql
+    │    ...
     </pre>
 
-    Then, copy and paste the provided environment variables into the .env file.
+In the `waterthetrees` directory, run:
+
+```shell
+docker compose up
+```
+
+When you want to stop the backend services, run:
+
+```shell
+docker compose down
+```
 
 4. Start the backend services.
 
-    Install the node modules in the `wtt_server` directory.
+    Install the node modules in the `wtt_server` directory. (The install.sh script will do the install for you)
+    Open a 2nd terminal window and run:
+
+   ```shell
+    ./install.sh
+    ```
+
+   OR
+
+   ```shell
+    cd wtt_server
+    ```
 
     ```shell
     npm install
     ```
 
-    Then, in the parent `waterthetrees` directory, run:
-
+    Ask for the .env file on slack and place it in the `wtt_server` directory.
     ```shell
-    docker compose up
-    ```
-
-    When you want to stop the backend services, run:
-
-    ```shell
-    docker compose down
-    ```
-
-5. Start the frontend.
-
-    Install the node modules in the `wtt_front` directory:
-
-    ```shell
-    npm install
+    cp .env.example .env
     ```
 
     Then run:
 
     ```shell
-    npm run start:dev
+    npm run start
+    ```
+
+
+5. Start the frontend.
+
+    Install the node modules in the `wtt_front` directory. (The install.sh script will do the install for you)
+    Open a 3rd terminal window and run.
+    If you already have run the install script, just start with npm run start.
+
+    ```shell
+    ./install.sh
+    ```
+
+    OR
+
+    ```shell
+    cd wtt_front
+    ```
+
+    ```shell
+    npm install
+    ```
+
+    ```shell
+    npm run start:dev; 
+    open http://localhost:3000;
     ```
 
     When you want to stop the frontend, press `Ctrl + C` in the terminal.
-
-6. Finally, visit http://localhost:3000 in your browser to view the map.
 
 ## Contributing
 
