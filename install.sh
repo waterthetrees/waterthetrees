@@ -1,30 +1,38 @@
 #!/bin/bash
 
 # Substitute variables here
-ORG='waterthetrees'
-PUB_KEY='~/.ssh/id_rsa.pub'
-USERNAME='youruser'
-TOKEN="yourtoken"
-# GITHUB_INSTANCE="<GITHUB INSTANCE>
+CURRENT_OS="Darwin" #Linux are other valid options
 
-brew install jq
-curl -s https://$USERNAME:$TOKEN@api.github.com/orgs/$ORG/repos?per_page=100 | jq ".[].ssh_url" | xargs -n 1 git clone
-mv wtt* $ORG/
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+nvm install 18
+nvm use 18
 
 # Write docker names to /etc/hosts
 echo '127.0.0.1 wtt_postgis' | sudo tee -a /etc/hosts
-echo '127.0.0.1 wtt_vectortiles' | sudo tee -a /etc/hosts
-echo '127.0.0.1 wtt_front' | sudo tee -a /etc/hosts
-echo '127.0.0.1 wtt_server' | sudo tee -a /etc/hosts
 
-# Clones martin
-export HOMEBREW_CORE_GIT_REMOTE="..."  # put your Git mirror of Homebrew/homebrew-core here
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+# Install git-lfs for the sql files
+cd wtt_db   
+echo $(uname)
 
-# # Install git-lfs for the sql files
-cd wtt_db
-brew install git-lfs
+OS_TYPE=$(uname)
+echo "${OS_TYPE}"
+
+if [ "${OS_TYPE}" == "Darwin" ]; then
+  echo "$OS_TYPE OS detected, installing git-lfs via brew"
+  brew install git-lfs
+fi
+
+if [ "${OS_TYPE}" == "Linux" ]; then
+  echo "$OS_TYPE OS detected, installing git-lfs via apt-get"
+  sudo apt-get install git-lfs
+fi
+
 git lfs install
 # # git lfs track "*.psd"
 git lfs track "treedb.sql"
 git add .gitattributes
+
