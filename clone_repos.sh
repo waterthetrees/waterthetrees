@@ -1,26 +1,33 @@
 #!/bin/bash
 
-CLONE_TYPE='ssh' # or https
-GIT_PREFIX='git@github.com:' # or https://github.com/
+has_ssh_permission() {
+  echo "Testing ssh permission..."
+  ssh -T git@github.com
+}
 
-if [ "$CLONE_TYPE" == "ssh" ]; then
+clone_repo() {
+  if [[ -d $1 ]]; then
+    echo "Directory ${1} already exists! Skipping..."
+  else
+    git clone "${GIT_PREFIX}waterthetrees/${1}.git"
+  fi
+}
+
+clone_all_repos() {
+  clone_repo "wtt_db"
+  clone_repo "wtt_front"
+  clone_repo "wtt_server"
+  clone_repo "tree-source"
+}
+
+if has_ssh_permission; then
+  echo "You have ssh permission!"
+  echo "Trying to clone using ssh..."
   GIT_PREFIX='git@github.com:'
-fi
-
-if [ "$CLONE_TYPE" == "https" ]; then
+else
+  echo "ssh failed!"
+  echo "Trying to clone using https instead..."
   GIT_PREFIX='https://github.com/'
 fi
 
-echo "Cloning repos"
-# Clones db
-[[ -d wtt_db ]] || git clone "${GIT_PREFIX}waterthetrees/wtt_db.git"
-# Clones frontend
-[[ -d wtt_front ]] || git clone "${GIT_PREFIX}waterthetrees/wtt_front.git"
-# Clones server
-[[ -d wtt_server ]] || git clone "${GIT_PREFIX}waterthetrees/wtt_server.git"
-# Clones tree_sources data
-[[ -d tree-source ]] || git clone "${GIT_PREFIX}waterthetrees/tree-source.git"
-
-
-
-
+clone_all_repos || echo "Failed to clone all repos!"
