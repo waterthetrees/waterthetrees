@@ -1,7 +1,7 @@
 version: "3"
 services:
   wtt_postgis:
-    image: postgis
+    image: postgis/postgis
     container_name: wtt_postgis
     ports:
       - "5432:5432"
