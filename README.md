@@ -143,13 +143,13 @@ You will need to ask a team member to provide you with the environment variables
 
 6. Start the backend.
 
-    Go into the `wtt_server` directory.
+    Open another terminal tab and go into the `wtt_server` directory.
 
     ```shell
     cd wtt_server
     ```
 
-    Open another terminal tab. Then run the following to start the backend.
+    Then run the following to start the backend.
 
     ```shell
     npm run start
@@ -157,18 +157,17 @@ You will need to ask a team member to provide you with the environment variables
 
 7. Start the frontend.
 
-    Go into the `wtt_front` directory.
+    Open another terminal tab and go into the `wtt_front` directory.
 
     ```shell
     cd wtt_front
     ```
 
-    Open another terminal tab. Then run the following to start the frontend and
+    Then run the following to start the frontend and
     open it in the browser.
 
     ```shell
-    npm run start:dev
-    open http://localhost:3000
+    npm run start:dev & open http://localhost:3000
     ```
 
     When you want to stop the frontend, press `Ctrl + C` in the terminal.
