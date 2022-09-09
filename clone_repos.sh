@@ -1,35 +1,33 @@
 #!/bin/bash
-ORG='waterthetrees'
-PUB_KEY='~/.ssh/id_rsa.pub'
-USERNAME='youruser'
-TOKEN="yourtoken"
 
-# On osx
-brew install jq
-curl -s https://$USERNAME:$TOKEN@api.github.com/orgs/$ORG/repos?per_page=100 | jq ".[].ssh_url" | xargs -n 1 git clone
-mv wtt* $ORG/
+has_ssh_permission() {
+  echo "Testing ssh permission..."
+  ssh -T git@github.com
+}
 
-# On windows?
-# Clones tree-id (npm package)
-[[ -d tree-id ]] || git clone https://github.com/waterthetrees/tree-id.git
+clone_repo() {
+  if [[ -d $1 ]]; then
+    echo "Directory ${1} already exists! Skipping..."
+  else
+    git clone "${GIT_PREFIX}waterthetrees/${1}.git"
+  fi
+}
 
-# Clones allometry (carbon calculator)
-[[ -d wtt_allometry ]] || git clone https://github.com/waterthetrees/wtt_allometry.git
+clone_all_repos() {
+  clone_repo "wtt_db"
+  clone_repo "wtt_front"
+  clone_repo "wtt_server"
+  clone_repo "tree-source"
+}
 
-# Clones area
-[[ -d wtt_area ]] || git clone https://github.com/waterthetrees/wtt_area.git
+if has_ssh_permission; then
+  echo "You have ssh permission!"
+  echo "Trying to clone using ssh..."
+  GIT_PREFIX='git@github.com:'
+else
+  echo "ssh failed!"
+  echo "Trying to clone using https instead..."
+  GIT_PREFIX='https://github.com/'
+fi
 
-# Clones db
-[[ -d wtt_db ]] || git clone https://github.com/waterthetrees/wtt_db.git
-
-# Clones frontend
-[[ -d wtt_front ]] || git clone https://github.com/waterthetrees/wtt_front.git
-
-# Clones notifications
-[[ -d wtt_notifications ]] || git clone https://github.com/waterthetrees/wtt_notifications.git
-
-# Clones server
-[[ -d wtt_server ]] || git clone https://github.com/waterthetrees/wtt_server.git
-
-# Clones vectortiles (martin)
-[[ -d wtt_vectortiles ]] || git clone https://github.com/waterthetrees/wtt_vectortiles.git
+clone_all_repos || echo "Failed to clone all repos!"

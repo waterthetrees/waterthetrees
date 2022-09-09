@@ -40,45 +40,72 @@ https://user-images.githubusercontent.com/6326660/180594618-f83d34f6-9c08-41bd-8
 ## Getting Started
 
 These instructions will get the project up and running on your local machine for
-development and testing purposes. They have been tested on macOS and
-[WSL](https://docs.microsoft.com/en-us/windows/wsl) in Windows, so YMMV with
-non-WSL Windows and Linux. If you encounter any trouble with these instructions
-please create an issue with the details of your problem on our
+development and testing purposes. If you encounter any trouble with these
+instructions please create an issue with the details of your problem on our
 [issue tracker](#bug-reports--feature-requests).
 
 ### Prerequisites
 
-- [Git](https://git-scm.com) and [Git-LFS](https://git-lfs.github.com)
+- [Git](https://git-scm.com)
+- [Git-LFS](https://git-lfs.github.com)
 - [Node](https://nodejs.org/en) version 18 or greater.
   - We recommend installing node using [nvm](https://github.com/nvm-sh/nvm#intro).
+    Our install script can install this for you if you don't already have it.
 - [Docker](https://www.docker.com/products/docker-desktop)
 
 ### Run Locally
 
-1. Clone the waterthetrees parent repo and enter the directory.
+1. Clone the `waterthetrees` parent repo and enter the directory.
 
     ```shell
     git clone https://github.com/waterthetrees/waterthetrees.git
     cd waterthetrees
     ```
 
-2. Run the script to clone all other repos.
+2. Run the script to clone the project's repos.
 
     ```shell
     ./clone_repos.sh
     ```
 
-3. The database config is passed into our backend server using
-[environment variables](https://github.com/waterthetrees/wtt_server/blob/development/server/db/db-config.js#L8-L12).
-You will need to ask a team member to provide you with the environment variables
-(Try our [Slack channel](#join-us)).
+3. For easy install, run the install script.
+
+    ```shell
+    ./install.sh
+    ```
+
+    Otherwise, you will need to manually set up the backend and frontend.
+
+    Set up the backend:
+    - Go into the `wtt_server` directory.
+    - Install the node modules.
+    - Create the `.env` file.
+    - Return to the root `waterthetrees` directory.
 
     ```shell
     cd wtt_server
-    touch .env
+    cp .env.example .env
+    npm install
+    cd ..
     ```
 
-    Your file tree structure should look like this.
+    Set up the frontend:
+    - Go into the `wtt_front` directory.
+    - Install the node modules.
+    - Return to the root `waterthetrees` directory.
+
+    ```shell
+    cd wtt_front
+    npm install
+    cd ..
+    ```
+
+4. The database config is passed into our backend server using
+[environment variables](https://github.com/waterthetrees/wtt_server/blob/development/server/db/db-config.js#L8-L12).
+You will need to ask a team member to provide you with the environment variables
+(Try our [Slack channel](#join-us)). Paste the contents into the `wtt_server/.env` file.
+
+    Your file tree structure should look something like this.
 
     <pre>
     waterthetrees
@@ -88,51 +115,62 @@ You will need to ask a team member to provide you with the environment variables
     |
     └───wtt_server
     │   │   <b>.env</b>
-    │   │   README.md
+    |   |   .env.example
     │   │
     │   └───server
     │       │   ...
+    |
+    └───wtt_db
+    |   |
+    │   └───treeddb.sql
+    │
+    |   ...
     </pre>
 
-    Then, copy and paste the provided environment variables into the .env file.
+5. Start the database.
 
-4. Start the backend services.
-
-    Install the node modules in the `wtt_server` directory.
-
-    ```shell
-    npm install
-    ```
-
-    Then, in the parent `waterthetrees` directory, run:
+    In the root `waterthetrees` directory, run:
 
     ```shell
     docker compose up
     ```
 
-    When you want to stop the backend services, run:
+    When you want to stop the database, run:
 
     ```shell
     docker compose down
     ```
 
-5. Start the frontend.
+6. Start the backend.
 
-    Install the node modules in the `wtt_front` directory:
+    Open another terminal tab and go into the `wtt_server` directory.
 
     ```shell
-    npm install
+    cd wtt_server
     ```
 
-    Then run:
+    Then run the following to start the backend.
 
     ```shell
-    npm run start:dev
+    npm run start
+    ```
+
+7. Start the frontend.
+
+    Open another terminal tab and go into the `wtt_front` directory.
+
+    ```shell
+    cd wtt_front
+    ```
+
+    Then run the following to start the frontend and
+    open it in the browser.
+
+    ```shell
+    npm run start:dev & open http://localhost:3000
     ```
 
     When you want to stop the frontend, press `Ctrl + C` in the terminal.
-
-6. Finally, visit http://localhost:3000 in your browser to view the map.
 
 ## Contributing
 
