@@ -26,7 +26,7 @@ cd ..
 # Backend set up
 echo -e "\n${GREEN}Setting up wtt_server...${RESET_COLOR}"
 cd wtt_server
-npm install
+npm ci
 cp .env.example .env
 cd ..
 

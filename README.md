@@ -85,7 +85,7 @@ instructions please create an issue with the details of your problem on our
     ```shell
     cd wtt_server
     cp .env.example .env
-    npm install
+    npm ci
     cd ..
     ```
 
