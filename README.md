@@ -101,7 +101,7 @@ instructions please create an issue with the details of your problem on our
     ```
 
 4. The database config is passed into our backend server using
-[environment variables](https://github.com/waterthetrees/wtt_server/blob/development/server/db/db-config.js#L8-L12).
+[environment variables](https://github.com/waterthetrees/wtt_server/blob/main/server/db/db-config.js#L8-L12).
 You will need to ask a team member to provide you with the environment variables
 (Try our [Slack channel](#join-us)). Paste the contents into the `wtt_server/.env` file.
 
