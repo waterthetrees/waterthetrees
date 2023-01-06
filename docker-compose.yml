@@ -1,10 +1,10 @@
-version: "3"
+version: '3'
 services:
   wtt_postgis:
     image: postgis/postgis
     container_name: wtt_postgis
     ports:
-      - "5432:5432"
+      - '5432:5432'
     build:
       context: ./wtt_db
     environment:
@@ -21,21 +21,21 @@ services:
       - /usr/src/app/node_modules # ignores local node_modules folder
     networks:
       - waterthetrees
-  # wtt_server:
-  #   container_name: wtt_server
-  #   depends_on:
-  #     - 'wtt_postgis'
-  #   ports:
-  #     - "3002:3002"
-  #   environment:
-  #     - DATABASE_HOST=wtt_postgis
-  #     - DATABASE_PORT=5432
-  #   volumes: # allows for live changes to reflect in container
-  #     - ./wtt_server:/usr/src/app # all local files are mirrored Docker
-  #     - /usr/src/app/node_modules # ignores local node_modules folder
-  #   build: ./wtt_server
-  #   networks:
-  #     - waterthetrees
+  wtt_server:
+    container_name: wtt_server
+    depends_on:
+      - 'wtt_postgis'
+    ports:
+      - '3002:3002'
+    environment:
+      - DATABASE_HOST=wtt_postgis
+      - DATABASE_PORT=5432
+    volumes: # allows for live changes to reflect in container
+      - ./wtt_server:/usr/src/app # all local files are mirrored Docker
+      - /usr/src/app/node_modules # ignores local node_modules folder
+    build: ./wtt_server
+    networks:
+      - waterthetrees
   # wtt_front:
   #    container_name: wtt_front
   #    depends_on:
