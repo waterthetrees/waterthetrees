@@ -17,7 +17,7 @@ clone_all_repos() {
   clone_repo "wtt_db"
   clone_repo "wtt_front"
   clone_repo "wtt_server"
-  clone_repo "tree-source"
+  clone_repo "tree-sources"
 }
 
 if has_ssh_permission; then
@@ -27,7 +27,7 @@ if has_ssh_permission; then
 else
   echo "ssh failed!"
   echo "Trying to clone using https instead..."
-  GIT_PREFIX='https://github.com/'
+  GIT_PREFIX='ssh://github.com/'
 fi
 
 clone_all_repos || echo "Failed to clone all repos!"
