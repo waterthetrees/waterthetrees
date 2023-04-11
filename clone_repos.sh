@@ -1,4 +1,11 @@
 #!/bin/bash
+# Use this script to clone all the repos in one go.
+# If you have ssh permission, it will clone using ssh.
+# Otherwise, it will clone using https.
+# This script is meant to be run from the parent directory of all the repos. Once you clone waterthetrees/waterthetrees, you can run this script to clone all the other repos.
+# Usage: ./clone_repos.sh from the waterthetrees directory.
+# wtt_db is the only repo that uses git-lfs, so it will be cloned using git-lfs. It clones and tracks the treedb.sql postgres database dump file.
+
 ORG="waterthetrees/"
 REPOS=("wtt_db" "wtt_front" "wtt_server" "tree-sources")
 
