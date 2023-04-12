@@ -59,3 +59,9 @@ git lfs install
 git lfs track "treedb.sql"
 git add .gitattributes
 cd ..
+
+
+# Start Dockers
+echo -e "\n${GREEN}Starting dockers...${RESET_COLOR}"
+cd ..
+docker compose up
