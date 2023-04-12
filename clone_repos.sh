@@ -19,6 +19,7 @@ clone_repo() {
     echo "Directory ${1} already exists! Skipping..."
   else
     git clone "${GIT_PREFIX}${ORG}${1}.git"
+    echo -e "\n${GREEN}clone...${GIT_PREFIX}${ORG}${1}.git"
     # git@github.com:waterthetrees/waterthetrees.git
   fi
 }
