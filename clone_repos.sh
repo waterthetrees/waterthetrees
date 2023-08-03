@@ -25,7 +25,7 @@ clone_repo() {
 }
 
 clone_all_repos() {
-  for i in $REPOS; 
+  for i in ${REPOS[@]}; 
     do clone_repo $i; 
   done
 }
