@@ -16,7 +16,8 @@ services:
       - DB_PASSWORD=trees3r4t
     restart: unless-stopped
     volumes:
-      - ./wtt_db/treedb.sql:/docker-entrypoint-initdb.d/treedb.sql
+      - ./wtt_db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
+      - ./wtt_db/treedb.sql:/db-dumps/treedb.sql
       - ./wtt_db:/usr/src/app # all local files are mirrored Docker
       - /usr/src/app/node_modules # ignores local node_modules folder
     networks:
