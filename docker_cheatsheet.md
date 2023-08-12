@@ -36,6 +36,11 @@ Find container id with docker ps first
 $ docker exec -it <container id> /bin/bash
 ```
 
+Accessing the DB from docker
+```shell
+psql -U trees -h wtt_postgis -d treedb
+```
+
 remove or stop docker
 ```shell
 $ docker images -a
