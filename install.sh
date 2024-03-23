@@ -63,5 +63,4 @@ cd ..
 
 # Start Dockers
 echo -e "\n${GREEN}Starting dockers...${RESET_COLOR}"
-cd ..
 docker compose up
